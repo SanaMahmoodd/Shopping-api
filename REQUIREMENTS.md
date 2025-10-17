@@ -1,8 +1,4 @@
 
----
-
-## 2️⃣ REQUIREMENTS.md (مثال كامل)
-
 ```markdown
 # Shopping API Requirements
 
