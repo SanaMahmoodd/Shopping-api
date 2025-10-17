@@ -1,0 +1,1 @@
+See the project prompt. Endpoints included in `/src/routes` and described in the course materials. Database schema found in `migrations/001_create_tables.up.sql`.

@@ -1,0 +1,81 @@
+-- Run this file with: psql $DATABASE_URL -f migrations/001_create_tables.up.sql
+
+
+CREATE TABLE IF NOT EXISTS addresses (
+id SERIAL PRIMARY KEY,
+user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+line1 VARCHAR(255) NOT NULL,
+line2 VARCHAR(255),
+city VARCHAR(100),
+state VARCHAR(100),
+postal_code VARCHAR(30),
+country VARCHAR(100),
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+
+CREATE TABLE IF NOT EXISTS categories (
+id SERIAL PRIMARY KEY,
+name VARCHAR(100) UNIQUE NOT NULL,
+description TEXT,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+
+CREATE TABLE IF NOT EXISTS products (
+id SERIAL PRIMARY KEY,
+name VARCHAR(255) NOT NULL,
+description TEXT,
+price NUMERIC(10,2) NOT NULL,
+stock INTEGER DEFAULT 0,
+sku VARCHAR(100) UNIQUE,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+
+CREATE TABLE IF NOT EXISTS product_images (
+id SERIAL PRIMARY KEY,
+product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
+url TEXT NOT NULL,
+alt_text VARCHAR(255),
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+
+CREATE TABLE IF NOT EXISTS product_categories (
+product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
+category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
+PRIMARY KEY (product_id, category_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS orders (
+id SERIAL PRIMARY KEY,
+user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+total NUMERIC(10,2) NOT NULL DEFAULT 0.00,
+status VARCHAR(50) DEFAULT 'pending',
+shipping_address_id INTEGER REFERENCES addresses(id),
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+
+CREATE TABLE IF NOT EXISTS order_items (
+id SERIAL PRIMARY KEY,
+order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
+product_id INTEGER REFERENCES products(id),
+quantity INTEGER NOT NULL DEFAULT 1,
+unit_price NUMERIC(10,2) NOT NULL,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
+
+
+CREATE TABLE IF NOT EXISTS reviews (
+id SERIAL PRIMARY KEY,
+user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
+rating INTEGER CHECK (rating >= 1 AND rating <= 5),
+comment TEXT,
+created_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
