@@ -24,7 +24,7 @@ supertest
 
 ---
 
-2. Environment Variables
+### 2. Environment Variables
 Create a .env file in the root directory with the following:
 
 ```bash
@@ -38,7 +38,7 @@ PORT=3000
 ```
 ---
 
-3. Database Setup
+### 3. Database Setup
 Make sure Docker is installed and running.
 
 Run Docker Compose to start PostgreSQL:
@@ -53,7 +53,7 @@ npm run migrate
 ```
 ---
 
-4. Start Server
+### 4. Start Server
 ```bash
 npm run watch
 ```
@@ -67,7 +67,7 @@ Database port:
 ```
 ---
 
-5. Test Environment
+### 5. Test Environment
 Run tests with:
 ```bash
 npm run test
@@ -76,7 +76,7 @@ Note: Tests use a separate database (shop_db_test) to prevent affecting developm
 
 ---
 
-6. File Structure
+### 6. File Structure
 ```bash
 src/
   controllers/
