@@ -67,4 +67,18 @@
 
 - Create a separate PostgreSQL database for testing (`shop_db_test`).  
 - In `.env.test`:
+POSTGRES_DB=shop_db_test
+POSTGRES_USER=shop_user
+POSTGRES_PASSWORD=shop_pass
+PORT=3001
 
+
+- Configure tests in Jasmine to connect to this database.
+
+---
+
+## 4. Notes
+
+- All passwords are hashed with `bcrypt`.
+- JWT tokens are used for user authentication.
+- Make sure Docker is running before starting the project.
