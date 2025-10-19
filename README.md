@@ -38,19 +38,23 @@ PORT=3000
 ```
 ---
 
-### 3. Database Setup
-Make sure Docker is installed and running.
-
-Run Docker Compose to start PostgreSQL:
-
+### 3. Local Setup (Without Docker)
+1. Install PostgreSQL locally and create a database named `shop_db`.
+2. Create a PostgreSQL user:
 ```bash
-docker-compose up -d
+CREATE USER shop_user WITH PASSWORD 'shop_pass';
+GRANT ALL PRIVILEGES ON DATABASE shop_db TO shop_user;
+```
+3. Copy `.env.example` → `.env` and update values if needed.
+4. Run migration:
+```bash
+npm run migrate:up
+```
+5. Start the server:
+```bash
+npm run dev
 ```
 
-Run database migrations:
-```bash
-npm run migrate
-```
 ---
 
 ### 4. Start Server
