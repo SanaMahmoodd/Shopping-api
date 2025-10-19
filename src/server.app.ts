@@ -1,16 +1,21 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import usersRoutes from './routes/users.routes';
-import productsRoutes from './routes/products.routes';
-import ordersRoutes from './routes/orders.routes';
+import express, { Request, Response } from "express";
+import usersRoutes from "./routes/users.routes";
+import productsRoutes from "./routes/products.routes";
+import ordersRoutes from "./routes/orders.routes";
 
 const app = express();
-app.use(bodyParser.json());
 
-app.use('/api/users', usersRoutes);
-app.use('/api/products', productsRoutes);
-app.use('/api/orders', ordersRoutes);
+// لتفسير JSON
+app.use(express.json());
 
-app.get('/', (req, res) => res.json({ status: 'ok' }));
+// المسارات
+app.use("/api/users", usersRoutes);
+app.use("/api/products", productsRoutes);
+app.use("/api/orders", ordersRoutes);
+
+// اختبار بسيط
+app.get("/", (req: Request, res: Response) => {
+  res.json({ message: "Server is running!" });
+});
 
 export default app;
