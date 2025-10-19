@@ -24,6 +24,18 @@ router.post('/', requireAuth, async (req: any, res) => {
   res.status(201).json(order);
 });
 
+router.post('/:id/products', requireAuth, async (req: any, res) => {
+  const order_id = Number(req.params.id);
+  const { product_id, quantity, unit_price } = req.body;
+  const added = await om.addProductToOrder({ order_id, product_id, quantity, unit_price });
+  res.status(201).json(added);
+});
+
+router.get('/:id/products', requireAuth, async (req: any, res) => {
+  const products = await om.getProductsForOrder(Number(req.params.id));
+  res.json(products);
+});
+
 router.patch('/:id/status', requireAuth, requireAdmin, async (req, res) => {
   const order = await om.updateStatus(Number(req.params.id), req.body.status);
   res.json(order);
